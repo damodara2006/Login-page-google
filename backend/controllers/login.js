@@ -23,7 +23,11 @@ const login = async(req,res)=>{
 
 const cookie = (req,res)=>{
     const value = req.cookies.login;
-    res.clearCookie("login")
+    res.clearCookie("login", {
+        sameSite: "none",
+        secure: true,
+        httpOnly: true
+      });
     res.send()
 }
 
