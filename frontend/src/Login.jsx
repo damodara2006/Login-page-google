@@ -9,7 +9,7 @@ import axios from "axios"
 function Login() {
   const [email,setemail] = useState() 
     const [profile,setprofile] = useState();
-  const BaseURL = "http://localhost:8080"
+  const BaseURL = "https://login-page-google-backend.onrender.com"
   const navigate = useNavigate()
   // console.log(dotenv)
   // console.log(import.meta.env.VITE_REACT_APP_CLIENT_ID)
