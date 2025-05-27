@@ -8,7 +8,7 @@ const login = async(req,res)=>{
     const value = jwt.sign({email, profile},"damo")
     // console.log(value)
     const verified = jwt.verify(value,"damo",{maxAge:60000})
-    res.cookie("login",value,{sameSite:"none"})
+    res.cookie("login",value,{sameSite:"none", maxAge:60000})
     res.send({email,profile})
     } catch (error) {
        console.log(error) 
