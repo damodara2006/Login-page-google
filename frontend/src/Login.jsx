@@ -9,7 +9,7 @@ import axios from "axios"
 function Login() {
   const [email,setemail] = useState() 
     const [profile,setprofile] = useState();
-  const BaseURL = "https://login-page-google-backend.onrender.com"
+  const BaseURL = "http://localhost:8080"
   const navigate = useNavigate()
   // console.log(dotenv)
   // console.log(import.meta.env.VITE_REACT_APP_CLIENT_ID)
@@ -21,8 +21,7 @@ function Login() {
       setprofile(res.data.profile)
       setemail(res.data.email)
       if(res.data.profile && res.data.email){
-        axios.defaults.withCredentials = true
-        axios.post(`${BaseURL}/login`,{email:email || res.data.email, profile: profile || res.data.profile})
+        axios.post(`${BaseURL}/login`,{email:res.data.email || email  , profile: res.data.profile ||  profile })
         .then(res=>{
         setdata(res.data)
         if((res.data.email).includes("@")){
@@ -33,7 +32,7 @@ function Login() {
       }
     }
     )
-  })
+  },[])
 
   const[data,setdata] = useState([])
   const [types,settype] = useState('password')
@@ -44,9 +43,11 @@ function Login() {
           Authorization: `Bearer ${tokenResponse.access_token}`
         }
       }).then((res)=>{
+        console.log(res)
         axios.defaults.withCredentials = true
-        axios.post(`${BaseURL}/login`,{email:email || res.data.email, profile: profile || res.data.picture})
+        axios.post(`${BaseURL}/login`,{email: res.data.email || email  , profile: res.data.picture ||  profile })
         .then(res=>{
+          console.log(res)
         setdata(res.data)
         if((res.data.email).includes("@")){
           navigate("/")

@@ -5,20 +5,23 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {ToastContainer, toast} from "react-toastify"
 function Home() {
-  // const location = useLocation()
+  const location = useLocation()
   const [email,setemail] = useState() 
   const [profile,setprofile] = useState();
-  const BaseURL = "https://login-page-google-backend.onrender.com"
+  const BaseURL = "http://localhost:8080"
   const navigate = useNavigate()
   // console.log(profile)
   useEffect(()=>{
-    axios.get(`${BaseURL}/findcookie`,{withCredentials:true}).then(res=>{
-      console.log(res)
-      setprofile(res.data.profile)
-      setemail(res.data.email)
+    if(!email){
+      axios.get(`${BaseURL}/findcookie`,{withCredentials:true}).then(res=>{
+        console.log(res)
+        setprofile(res.data.profile)
+        setemail(res.data.email)
+      }
+      )
     }
-    )
-  } )
+    
+  },[])
   const handleclick = ()=>{
     toast.success("Logged out",{autoClose:2000})
     axios.defaults.withCredentials = true
