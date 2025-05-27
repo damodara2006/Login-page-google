@@ -13,6 +13,7 @@ function Home() {
   // console.log(profile)
   useEffect(()=>{
     if(!email){
+      axios.defaults.withCredentials = true
       axios.get(`${BaseURL}/findcookie`,{withCredentials:true}).then(res=>{
         console.log(res)
         setprofile(res.data.profile)
